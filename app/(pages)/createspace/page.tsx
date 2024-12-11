@@ -106,10 +106,65 @@ const UploadForm = () => {
         />
       </div>
 
-      {/* Other fields remain the same */}
+    <div className="mb-4">
+        <label htmlFor="mapId" className="block text-sm font-medium text-gray-700">
+          Map ID
+        </label>
+        <input
+          type="text"
+          id="mapId"
+          name="mapId"
+          value={formData.mapId}
+          onChange={handleChange}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="mimeType" className="block text-sm font-medium text-gray-700">
+          Mime Type
+        </label>
+        <input
+          type="text"
+          id="mimeType"
+          name="mimeType"
+          value={formData.mimeType}
+          onChange={handleChange}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="dimensions" className="block text-sm font-medium text-gray-700">
+          Dimensions
+        </label>
+        <input
+          type="text"
+          id="dimensions"
+          name="dimensions"
+          value={formData.dimensions}
+          onChange={handleChange}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="file" className="block text-sm font-medium text-gray-700">
+          Choose Image
+        </label>
+        <input
+          type="file"
+          id="file"
+          name="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          className="mt-1 block w-full text-sm text-gray-500 border border-gray-300 rounded-md"
+        />
+      </div>
 
       <div className="mt-4 flex justify-end">
         <button
+        
           type="submit"
           className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
         >
