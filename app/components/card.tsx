@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation";
 import { FaRegEdit } from "react-icons/fa";
 import { IoEnterOutline } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
-import { toast, ToastContainer } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
 
 interface ProductCardProps {
   image: string; // URL of the product image
@@ -45,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ image, name, spaceId, onDelet
    const username = localStorage.getItem('nickname');
   const handleEnter = () => {
     if(spaceId=="67592afb33d6520f0de5a6df"){
-      window.location.href = `http://localhost:3001/?name=${username}&color=${color[Math.floor(Math.random()*10)%4]}`;
+      window.location.href = `${process.env.FIRST_GAME}?name=${username}&color=${color[Math.floor(Math.random()*10)%4]}`;
     }
     else
     router.push(`/arena/${spaceId}`); // Navigate to the arena page
