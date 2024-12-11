@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { FaRegEdit } from "react-icons/fa";
 import { IoEnterOutline } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
+import { useState, useEffect } from "react";
 
 interface ProductCardProps {
   image: string; // URL of the product image
@@ -14,13 +15,20 @@ interface ProductCardProps {
   userId: string; // ID of the current user
 }
 
-const color = ["red" , "blue" , "green" , "yellow"];
+const color = ["red", "blue", "green", "yellow"];
 
 const ProductCard: React.FC<ProductCardProps> = ({ image, name, spaceId, onDelete, userId }) => {
   const router = useRouter();
-   
+  const [username, setUsername] = useState<string | null>(null);
+
   // Simulate the number of players (for example, random number between 0 and 10)
   const playersInRoom = Math.floor(Math.random() * 11); // Random number between 0 and 10
+
+  useEffect(() => {
+    // This will run only on the client-side
+    const storedUsername = localStorage.getItem("nickname");
+    setUsername(storedUsername);
+  }, []);
 
   const handleDelete = async () => {
     try {
@@ -40,17 +48,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ image, name, spaceId, onDelet
   const handleEdit = () => {
     router.push(`/customizeSpace/${spaceId}`); // Navigate to the edit page
   };
-   const username = localStorage.getItem('nickname');
+
   const handleEnter = () => {
-    if(spaceId=="67592afb33d6520f0de5a6df"){
-      window.location.href = `${process.env.FIRST_GAME}?name=${username}&color=${color[Math.floor(Math.random()*10)%4]}`;
+    if (spaceId === "67592afb33d6520f0de5a6df" && username) {
+      window.location.href = `${process.env.FIRST_GAME}?name=${username}&color=${color[Math.floor(Math.random() * 10) % 4]}`;
+    } else {
+      router.push(`/arena/${spaceId}`); // Navigate to the arena page
     }
-    else
-    router.push(`/arena/${spaceId}`); // Navigate to the arena page
   };
 
-  const isCurrentUser = (userId == username); // Check if the logged-in user is the owner of the space
-   
+  const isCurrentUser = username && userId === username; // Check if the logged-in user is the owner of the space
+
   return (
     <div
       className="w-72 bg-slate-700 border-white border-2 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
