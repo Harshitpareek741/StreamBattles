@@ -16,7 +16,7 @@ interface Space {
 }
 
 export default function Page() {
-  // eslint-disable-next-line no-console
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [vantaEffect, setVantaEffect] = useState<any>(null);
   const vantaRef = useRef<HTMLDivElement>(null);
   const [data, setData] = useState<Space[]>([]);
