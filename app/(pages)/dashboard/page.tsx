@@ -16,7 +16,7 @@ interface Space {
 }
 
 export default function Page() {
-  const [vantaEffect, setVantaEffect] = useState<any>(null);
+  const [vantaEffect, setVantaEffect] = useState(null);
   const vantaRef = useRef<HTMLDivElement>(null);
   const [data, setData] = useState<Space[]>([]);
   const [isLoading, setIsLoading] = useState(true);
