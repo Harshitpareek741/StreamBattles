@@ -51,7 +51,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ image, name, spaceId, onDelet
 
   const handleEnter = () => {
     if (spaceId === "67592afb33d6520f0de5a6df" && username) {
-      window.location.href = `${process.env.FIRST_GAME}?name=${username}&color=${color[Math.floor(Math.random() * 10) % 4]}`;
+      window.location.href = `${process.env.NEXT_PUBLIC_FIRST_GAME}?name=${username}&color=${color[Math.floor(Math.random() * 10) % 4]}`;
     } else {
       router.push(`/arena/${spaceId}`); // Navigate to the arena page
     }
