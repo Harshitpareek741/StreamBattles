@@ -9,7 +9,7 @@ import random from "random-name";
 import Filter from "bad-words";
 
 export default function Home() {
-  const [vantaEffect, setVantaEffect] = useState<any>(null);
+  const [vantaEffect, setVantaEffect] = useState(null);
   const vantaRef = useRef<HTMLDivElement>(null);
 
   const username = useRef<HTMLInputElement | null>(null);
