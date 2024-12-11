@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import Image from "next/image";
 import React, { useState, useEffect } from "react";
 
 // Define types for image data and map data
@@ -128,7 +129,8 @@ const handleMapClick = (e: React.MouseEvent<HTMLDivElement>) => {
       } else {
         alert("Failed to add elements.");
       }
-    } catch (error) {
+    } catch (e) {
+      console.log(e);
       alert("Error occurred while adding elements.");
     }
   };
@@ -150,7 +152,7 @@ const handleMapClick = (e: React.MouseEvent<HTMLDivElement>) => {
                 }`}
                 onClick={() => handleSelectImage(image)}
               >
-                <img
+                <Image
                   src={imageMap[image.id]} // Use imageMap to get the URL
                   alt={image.id}
                   className="w-32 h-32 object-cover mx-auto" // Fixed size (32x32) and centered image
