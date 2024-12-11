@@ -9,7 +9,7 @@ import random from "random-name";
 import Filter from "bad-words";
 
 export default function Home() {
-  // eslint-disable-next-line no-console
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [vantaEffect, setVantaEffect] = useState<any>(null);
   const vantaRef = useRef<HTMLDivElement>(null);
 
