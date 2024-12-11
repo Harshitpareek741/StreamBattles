@@ -5,14 +5,11 @@ import Header from "@/app/components/header";
 import { Spinner } from "@/app/components/spinner";
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import NET from "vanta/dist/vanta.net.min";
 import * as THREE from "three";
 
-
 interface Space {
-  userId: any;
+  userId: string;
   id: string;
   name: string;
   thumbnail: string;
@@ -106,20 +103,6 @@ export default function Page() {
           )}
         </div>
       </div>
-
-      {/* Toast Notifications */}
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </div>
   );
 }
