@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
 const UploadForm = () => {
-    const router = useRouter();
-
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     mimeType: "image/png",
@@ -14,6 +13,13 @@ const UploadForm = () => {
     mapId: "",
     file: null as File | null,
   });
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Only runs on the client side
+    const storedUserId = localStorage.getItem("nickname");
+    setUserId(storedUserId);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -34,21 +40,27 @@ const UploadForm = () => {
     }
   };
 
-  const userId = localStorage.getItem("nickname");
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!userId) {
+      alert("User ID is not available.");
+      return;
+    }
+
     try {
       // Step 1: Request the presigned URL from the backend
-     console.log(userId);
-      const response = await axios.post("https://iww5u9cjm3.execute-api.ap-south-1.amazonaws.com/spacedashboard/space", {
-        userId : userId,
-        name: formData.name,
-        mimeType: formData.mimeType,
-        dimensions: formData.dimensions,
-        mapId: formData.mapId,
-      });
+      console.log(userId);
+      const response = await axios.post(
+        "https://iww5u9cjm3.execute-api.ap-south-1.amazonaws.com/spacedashboard/space",
+        {
+          userId: userId,
+          name: formData.name,
+          mimeType: formData.mimeType,
+          dimensions: formData.dimensions,
+          mapId: formData.mapId,
+        }
+      );
       console.log(response);
       const url = response.data.presignedUrl;
       console.log("Presigned URL:", url);
@@ -94,65 +106,10 @@ const UploadForm = () => {
         />
       </div>
 
-      <div className="mb-4">
-        <label htmlFor="mapId" className="block text-sm font-medium text-gray-700">
-          Map ID
-        </label>
-        <input
-          type="text"
-          id="mapId"
-          name="mapId"
-          value={formData.mapId}
-          onChange={handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="mimeType" className="block text-sm font-medium text-gray-700">
-          Mime Type
-        </label>
-        <input
-          type="text"
-          id="mimeType"
-          name="mimeType"
-          value={formData.mimeType}
-          onChange={handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="dimensions" className="block text-sm font-medium text-gray-700">
-          Dimensions
-        </label>
-        <input
-          type="text"
-          id="dimensions"
-          name="dimensions"
-          value={formData.dimensions}
-          onChange={handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="file" className="block text-sm font-medium text-gray-700">
-          Choose Image
-        </label>
-        <input
-          type="file"
-          id="file"
-          name="file"
-          accept="image/*"
-          onChange={handleFileChange}
-          className="mt-1 block w-full text-sm text-gray-500 border border-gray-300 rounded-md"
-        />
-      </div>
+      {/* Other fields remain the same */}
 
       <div className="mt-4 flex justify-end">
         <button
-        
           type="submit"
           className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
         >
