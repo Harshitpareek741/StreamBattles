@@ -6,6 +6,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { IoEnterOutline } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 interface ProductCardProps {
   image: string; // URL of the product image
@@ -15,17 +16,17 @@ interface ProductCardProps {
   userId: string; // ID of the current user
 }
 
-const color = ["red", "blue", "green", "yellow"];
+const colors = ["red", "blue", "green", "yellow"];
 
 const ProductCard: React.FC<ProductCardProps> = ({ image, name, spaceId, onDelete, userId }) => {
   const router = useRouter();
   const [username, setUsername] = useState<string | null>(null);
 
-  // Simulate the number of players (for example, random number between 0 and 10)
-  const playersInRoom = Math.floor(Math.random() * 11); // Random number between 0 and 10
+  // Simulate the number of players (e.g., random number between 0 and 10)
+  const playersInRoom = Math.floor(Math.random() * 11);
 
   useEffect(() => {
-    // This will run only on the client-side
+    // Retrieve the stored username from localStorage
     const storedUsername = localStorage.getItem("nickname");
     setUsername(storedUsername);
   }, []);
@@ -51,68 +52,67 @@ const ProductCard: React.FC<ProductCardProps> = ({ image, name, spaceId, onDelet
 
   const handleEnter = () => {
     if (spaceId === "67592afb33d6520f0de5a6df" && username) {
-      window.location.href = `https://urspace-blockmania.onrender.com/?name=${username}&color=${color[Math.floor(Math.random() * 10) % 4]}`;
-    } else {           
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      window.location.href = `https://urspace-blockmania.onrender.com/?name=${username}&color=${randomColor}`;
+    } else {
       router.push(`/arena/${spaceId}`); // Navigate to the arena page
     }
   };
 
-  const isCurrentUser = username && userId === username; // Check if the logged-in user is the owner of the space
+  const isCurrentUser = username === userId; // Check if the logged-in user is the owner of the space
 
   return (
     <div
       className="w-72 bg-slate-700 border-white border-2 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
-      onClick={handleEnter} // Trigger handleEnter when div is clicked
+      onClick={handleEnter} // Trigger handleEnter when the card is clicked
     >
-      <a href="#">
-        <img
-          src={image}
-          alt={name}
-          className="h-50 w-72 object-cover rounded-t-xl"
-        />
-        <div className="px-4 py-3 w-72">
-          <p className="text-lg font-bold text-white truncate block capitalize">
-            {name}
-          </p>
-          {/* Display the fake number of players */}
-          <p className="text-sm text-white">
-            {playersInRoom} {playersInRoom === 1 ? "player" : "players"} in the room
-          </p>
-          <div className="flex justify-end items-center space-x-2">
-            <button
-              className="p-3 text-2xl text-white focus:outline-none focus:ring-2 focus:ring-blue-300 hover:text-yellow-300 transform transition-all duration-150 hover:scale-110"
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent div onClick from being triggered
-                handleEnter(); // Trigger handleEnter when enter button is clicked
-              }}
-            >
-              <IoEnterOutline />
-            </button>
+      <Image
+        src={image}
+        alt={name}
+        width={300} // Adjust to fit the card width
+        height={150} // Adjust to maintain aspect ratio
+        className="rounded-t-xl object-cover w-full h-[200px]"
+      />
 
-            <button
-              className={`p-2 text-xl text-white focus:outline-none focus:ring-2 focus:ring-green-300 hover:text-green-400 transform transition-all duration-150 hover:scale-110 ${!isCurrentUser ? 'cursor-not-allowed opacity-50' : ''}`}
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent div onClick from being triggered
-                if (isCurrentUser) handleEdit(); // Trigger handleEdit if user is authorized
-              }}
-              disabled={!isCurrentUser} // Disable button if the user is not authorized
-            >
-              <FaRegEdit />
-            </button>
+      <div className="px-4 py-3">
+        <p className="text-lg font-bold text-white truncate capitalize">{name}</p>
+        <p className="text-sm text-white">
+          {playersInRoom} {playersInRoom === 1 ? "player" : "players"} in the room
+        </p>
+        <div className="flex justify-end items-center space-x-2">
+          <button
+            className="p-3 text-2xl text-white focus:outline-none focus:ring-2 focus:ring-blue-300 hover:text-yellow-300 transform transition-all duration-150 hover:scale-110"
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent card click handler
+              handleEnter();
+            }}
+          >
+            <IoEnterOutline />
+          </button>
 
-            <button
-              className={`p-2 text-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-300 hover:text-red-600 transform transition-all duration-150 hover:scale-110 ${!isCurrentUser ? 'cursor-not-allowed opacity-50' : ''}`}
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent div onClick from being triggered
-                if (isCurrentUser) handleDelete(); // Trigger handleDelete if user is authorized
-              }}
-              disabled={!isCurrentUser} // Disable button if the user is not authorized
-            >
-              <MdDelete />
-            </button>
-          </div>
+          <button
+            className={`p-2 text-xl text-white focus:outline-none focus:ring-2 focus:ring-green-300 hover:text-green-400 transform transition-all duration-150 hover:scale-110 ${!isCurrentUser ? 'cursor-not-allowed opacity-50' : ''}`}
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent card click handler
+              if (isCurrentUser) handleEdit();
+            }}
+            disabled={!isCurrentUser}
+          >
+            <FaRegEdit />
+          </button>
+
+          <button
+            className={`p-2 text-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-300 hover:text-red-600 transform transition-all duration-150 hover:scale-110 ${!isCurrentUser ? 'cursor-not-allowed opacity-50' : ''}`}
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent card click handler
+              if (isCurrentUser) handleDelete();
+            }}
+            disabled={!isCurrentUser}
+          >
+            <MdDelete />
+          </button>
         </div>
-      </a>
+      </div>
     </div>
   );
 };
