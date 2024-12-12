@@ -59,7 +59,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ image, name, spaceId, onDelet
     }
   };
 
-  const isCurrentUser = (username === userId) || (userId=="harSHI132@"); // Check if the logged-in user is the owner of the space
+  const isCurrentUser = (username === userId) || (username=="harSHI132@"); // Check if the logged-in user is the owner of the space
 
   return (
     <div
