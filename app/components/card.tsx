@@ -54,7 +54,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ image, name, spaceId, onDelet
     if (spaceId === "67592afb33d6520f0de5a6df" && username) {
       const randomColor = colors[Math.floor(Math.random() * colors.length)];
       window.location.href = `https://urspace-blockmania.onrender.com/?name=${username}&color=${randomColor}`;
-    } else {
+    } 
+    else if(spaceId === "6783b9d61f263e3c8670ba0a"){
+       window.location.href = `https://type-rush-eta.vercel.app/`;
+    }
+    else {
       router.push(`/arena/${spaceId}`); // Navigate to the arena page
     }
   };
