@@ -51,7 +51,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ image, name, spaceId, onDelet
   };
 
   const handleEnter = () => {
-    if (spaceId === "67592afb33d6520f0de5a6df" && username) {
+    if (spaceId === "67592afb33d6520f0de5a6df") {
       const randomColor = colors[Math.floor(Math.random() * colors.length)];
       window.location.href = `https://urspace-blockmania.onrender.com/?name=${username}&color=${randomColor}`;
     } 
